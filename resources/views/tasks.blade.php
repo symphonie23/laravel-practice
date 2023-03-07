@@ -51,7 +51,6 @@
                     <!-- Table Headings -->
                     <thead>
                         <th>Task</th>
-                        <th>Created on</th>
                         <th>&nbsp;</th>
                     </thead>
  
@@ -63,9 +62,7 @@
                                 <td class="table-text">
                                     <div>{{ $task->name }}</div>
                                 </td>
-                                <td class="table-text">
-                                    <div>{{ $task->created_at->format('m-d-Y H:i:s') }}</div>
-                                </td>
+                                
                                 <!-- Delete Button -->
                                 <td class="delete-button">
                                     <form action="{{ url('task/'.$task->id) }}" method="POST" id="delete-task-{{ $task->id }}">
