@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Task;
 use Illuminate\Http\Request;
+use App\Models\Task;
 use Illuminate\Support\Facades\Validator;
 
 class TaskController extends Controller
