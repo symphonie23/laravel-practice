@@ -62,7 +62,6 @@
                                 <td class="table-text">
                                     <div>{{ $task->name }}</div>
                                 </td>
-                                
                                 <!-- Delete Button -->
                                 <td class="delete-button">
                                     <form action="{{ url('task/'.$task->id) }}" method="POST" id="delete-task-{{ $task->id }}">
