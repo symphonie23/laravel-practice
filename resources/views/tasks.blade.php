@@ -4,6 +4,12 @@
 @extends('layouts.app')
  
 @section('content')
+
+@if (Auth::guest())
+    <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
+@endif
+
+<div class="container">
  
     <!-- Bootstrap Boilerplate... -->
  
