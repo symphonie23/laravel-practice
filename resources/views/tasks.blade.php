@@ -1,19 +1,8 @@
-<head>
-    <title>Homepage</title>
-    <!-- Add the Bootstrap stylesheet -->
-    <!-- ajax -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>    
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-</head>
-
 @extends('layouts.app')
 
 @section('content')
 
-    <div class="container">
+    <div class="container" style="width=100px; margin-left=50%; border-style:solid; background-color:#E9D3C0;">
         @auth
         <div class="panel-body">
             @include('common.errors')
@@ -21,23 +10,8 @@
             <form action="{{ url('task') }}" method="POST" class="form-horizontal">
                 {{ csrf_field() }}
 
-                <div class="form-group">
-                    <label for="task" class="col-sm-3 control-label">Task Name:</label>
-
-                    <div class="col-sm-6">
-                        <input type="text" name="name" id="task-name" class="form-control">
-                    </div>
-                </div>
-
                 <br>
 
-                <div class="form-group">
-                    <div class="col-sm-offset-3 col-sm-6">
-                        <button type="submit" class="btn btn-outline-primary" onclick="showCreateTaskModal()">
-                            <i class="fa fa-plus"></i> Add a Task
-                        </button>
-                    </div>
-                </div>
             </form>
         </div>
 
@@ -47,52 +21,51 @@
 
         <br>
 
-        
-
-        <button type="submit">Submit</button>
-        <script>
-            $(document).ready(function() {
-                $('#add-task-btn').click(function() {
-                    $('#myForm').submit();
-                    $('#myModal').modal('hide');
-                });
-            });
-        </script>
-
 @if (count($tasks) > 0)
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h2>Current Tasks</h2>
+                    <center><h2>Current Tasks</h2></center>
                 </div>
+                <hr>
+                
+                    
+                        <table class="table table-hover">
+                            <thead>
+                                <th class="col-3">Task Names</th>
+                                <!--to do-->
+                                <th class="col-6">Information</th>
+                                <th class="col-3">Action</th>
+                            </thead>
 
-                <div class="panel-body">
-                    <table class="table table-striped task-table">
-                        <thead>
-                            <th>Tasks</th>
-                            <th>&nbsp;</th>
-                        </thead>
+                            <div class="container">
+                                <tbody class="tbody">
+                                    @foreach ($tasks as $task)
+                                        <tr id="tr">
+                                            <div class="row">
+                                                <td style="vertical-align:middle; border-left:2px solid beige;">
+                                                    <div>{{ $task->name }}</div>
+                                                </td>
 
-                        <tbody class="tbody">
-                            @foreach ($tasks as $task)
-                                <tr>
-                                    <td class="table-text">
-                                        <div>{{ $task->name }}</div>
-                                    </td>
+                                                <!--to do-->
+                                                <td style="vertical-align:middle; border-left:2px solid beige;">
+                                                    <div>{{ $task->name }}</div>
+                                                </td>
 
-                                    <td class="delete-button">
-                                        <form action="{{ url('task/'.$task->id) }}" method="POST" id="delete-task-{{ $task->id }}">
-                                            {{ csrf_field() }}
-                                            {{ method_field('DELETE') }}
-                                            
-                                            <button type="submit" class="btn btn-danger delete-task" data-task-id="{{ $task->id }}">
-                                                <i class="fa fa-trash"></i> Remove Task
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                                <td style="display:flex; justify-content:center; padding-top:8px; border-left:2px solid beige; border-right:2px solid beige;">
+                                                    <form action="{{ url('task/'.$task->id) }}" method="POST" id="delete-task-{{ $task->id }}">
+                                                        {{ csrf_field() }}
+                                                        {{ method_field('DELETE') }}
+                                                        <br>
+                                                        <button type="submit" class="btn btn-danger delete-task" data-task-id="{{ $task->id }}">
+                                                            <i class="fa fa-trash"></i> Remove Task
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </div>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                        </table>
                 </div>
             </div>
         @endif
@@ -102,42 +75,7 @@
 </div>
 @endsection
 
-<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>jQuery UI Dialog functionality</title>
-    <link
-      href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
-      rel="stylesheet"
-    />
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-
-    <!-- CSS -->
-    <style>
-      .ui-widget-header,
-      .ui-state-default,
-      ui-button {
-        background: #b9cd6d;
-        border: 1px solid #b9cd6d;
-        color: #ffffff;
-        font-weight: bold;
-      }
-    </style>
-
-    <!-- Javascript -->
-    <script>
-      $(function () {
-        $("#dialog-1").dialog({
-          autoOpen: false,
-        });
-        $("#opener").click(function () {
-          $("#dialog-1").dialog("open");
-        });
-      });
-    </script>
-  </head>
 
   <body>
     <!-- HTML -->
@@ -145,34 +83,62 @@
       <form action="{{ url('task') }}" method="POST" class="form-horizontal">
         {{ csrf_field() }}
 
-        <div class="form-group">
-          <label for="task" class="col-sm-3 control-label">Task Name:</label>
+        <div class="form-group" >
+          <label for="task" class="col-sm-3 control-label" style="width:1000px;">Task Name:</label>
 
-          <div class="col-sm-6">
+          <br>
+          <br>
+
             <input
               type="text"
               name="name"
               id="task-name"
               class="form-control"
             />
-          </div>
+          
         </div>
 
-        <br />
+        <br>
+
+        <div class="form-group" >
+          <label for="task" class="col-sm-3 control-label" style="width:1000px;">Information:</label>
+
+          <br>
+          <br>
+
+            <input
+              type="text"
+              name="name"
+              id="task-name"
+              class="form-control"
+            />
+          
+        </div>
 
         <div class="form-group">
           <div class="col-sm-offset-3 col-sm-6">
+
+          <br>
             <button
               type="submit"
               class="btn btn-outline-primary"
               onclick="showCreateTaskModal()"
             >
+                <!--show an alert box after adding task-->
+                <script>
+                    function showCreateTaskModal()
+                    {
+                    alert("You have successfully\nadded a task!");
+                    }
+                </script>
               <i class="fa fa-plus"></i> Confirm
             </button>
           </div>
         </div>
       </form>
     </div>
-    <button id="opener">Adddddd</button>
+    <button id="opener" style="position: absolute; top: 120px; left:50%; width:auto; height:35px; border-radius:10px; transform: translate(-50%, -50%);" class="btn btn-primary">Add Task</button>
+    
   </body>
 </html>
+
