@@ -1,0 +1,11 @@
+#myText {
+    font-size: 24px;
+    font-weight: bold;
+    color: green;
+}
+
+.panel-body {
+    text-align: center;
+    align-content: center;
+    display: flex;
+}

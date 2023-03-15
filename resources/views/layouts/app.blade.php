@@ -1,21 +1,39 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <title>jQuery UI Dialog functionality</title>
+    <link
+      href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+      rel="stylesheet"
+    />
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- CSS -->
+    <style>
+      .ui-widget-header,
+      .ui-state-default,
+      ui-button {
+        background: #b9cd6d;
+        border: 1px solid #b9cd6d;
+        color: #ffffff;
+        font-weight: bold;
+      }
+    </style>
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-
-    <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-</head>
+    <!-- Javascript -->
+    <script>
+      $(function () {
+        $("#dialog-1").dialog({
+          autoOpen: false,
+        });
+        $("#opener").click(function () {
+          $("#dialog-1").dialog("open");
+        });
+      });
+    </script>
+  </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
@@ -48,21 +66,18 @@
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
-                        @else
+                            @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
-
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    Logout
                                     </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
                                     </form>
                                 </div>
                             </li>
@@ -76,5 +91,40 @@
             @yield('content')
         </main>
     </div>
+
+    <script>
+        $(document).ready(function() {
+        $('#openModal').click(function() {
+            $('#myModal').show();
+        });
+
+        $('#myForm').submit(function(event) {
+            event.preventDefault();
+            $.ajax({
+            url: 'submit.php', // Replace with your form submission URL
+            type: 'post',
+            data: $('#myForm').serialize(),
+            success: function(response) {
+                $('#myModal').hide();
+                // Handle successful form submission
+            },
+            error: function() {
+                alert('Error submitting form');
+            }
+            });
+        });
+        });
+
+        $(document).ready(function () {
+            $("#myText").fadeIn(2000);
+        });
+
+        $(document).ready(function () {
+            $("#hidden").hover(function () {
+                $(this).css("color", "green");
+            });
+        });
+
+    </script>
 </body>
 </html>
