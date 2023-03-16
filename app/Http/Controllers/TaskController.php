@@ -34,15 +34,13 @@ class TaskController extends Controller
         $task->created_at = now(); //sets time to real-time
         $task->save();
 
-        return redirect('/');
+        return redirect('/tasks');
     }
 
     public function destroy(Task $task)
     {
-        
-
         $task->delete();
 
-        return redirect('/');
+        return redirect('/tasks');
     }
 }
